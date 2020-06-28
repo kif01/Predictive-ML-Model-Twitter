@@ -36,7 +36,7 @@ The first thing we'll need to do is get a bunch of tweets to analyze. In this st
 *If you're using the sample data, then skip to Step 3.*
 
 Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets we need to generate our Consumer api keys :<br/>
-Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.  <br />    
+Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.<br><br>    
 
 
 <img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png">
