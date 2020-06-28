@@ -39,7 +39,7 @@ Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets we need t
 Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.
 
 
-<img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png"><br/> 
+<img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png"><br /> 
 
 
 Once your app is created select the Keys and Tokens tab. You will see your Consumer API key and Consumer API secret key which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
