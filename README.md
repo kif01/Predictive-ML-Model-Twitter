@@ -79,7 +79,7 @@ Our bucket is now ready, make sure to have your:
 Usually we create cloud functions directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our python code and package it with a local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
 
 If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/). Once installed make sure to install **virtualenv**. 
-```console
+```dos
 pip install virtualenv 
 ``` 
 <br>Create a directory that you can use to create your virtual environment. In this example I named it twitterApp
