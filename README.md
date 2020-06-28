@@ -38,11 +38,11 @@ The first thing we'll need to do is get a bunch of tweets to analyze. In this st
 Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets we need to generate our Consumer api keys :<br><br>
 Go to your [Twitter Developer account](https://developer.twitter.com/),  hover over your name on the top right create your app. Fill the information required.
 
-![](images/twitter1.png)
+<img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png">
 
 Once your app is created select the Keys and Tokens tab. You will see your Consumer API key and Consumer API secret key which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
 
-![](images/twitter2.png)
+<img width="1440" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
 
 ### Step 2: Creating a Cloud Object Storage (COS) service in IBM Cloud
 
@@ -50,23 +50,23 @@ Once your app is created select the Keys and Tokens tab. You will see your Consu
 
 Log into your ibm cloud account at https://cloud.ibm.com/login, click on Create Resource and search for Object Storage. 
 
-![](images/cos1.png)
+<img width="1440" alt="cos1" src="https://user-images.githubusercontent.com/15332386/85959761-5aae2900-b9af-11ea-959b-8441e5fdbf71.png">
 
 Choose the lite plan which is free, change the name if you want to and click on Create.
 
-![](images/cos2.png)
+<img width="1440" alt="cos2" src="https://user-images.githubusercontent.com/15332386/85959763-5f72dd00-b9af-11ea-801f-c7334573053b.png">
 
 You can now find your object storage instance created in ressources under Storage. Once you open your instance click on Buckets from the left side panel and create a bucket (You can choose any type of bucket). Make sure to note down the name of your bucket once you create it.
 
-![](images/cos3.png)
+<img width="1440" alt="cos3" src="https://user-images.githubusercontent.com/15332386/85959764-600b7380-b9af-11ea-8b51-40e762b398bb.png">
 
 Go to service crendentials from the panel, select the service credential that has just been created. If nothing is there then click on "New credential". Click on the arrow to expand the credentials. Note down  the "api_key" and the "iam_serviceid_crn".
 
-![](images/cos4.png)
+<img width="1440" alt="cos4" src="https://user-images.githubusercontent.com/15332386/85959765-60a40a00-b9af-11ea-824d-c44c07d62e7c.png">
 
 Go to endpoint from the panel. Choose your resilency and region, and note down the private url since it will be needed later in our cloud function.
 
-![](images/cos5.png)
+<img width="1440" alt="cos5" src="https://user-images.githubusercontent.com/15332386/85959766-613ca080-b9af-11ea-990f-d2aef0d6c83c.png">
 
 Our bucket is now ready, make sure to have your:
  * Bucket name
