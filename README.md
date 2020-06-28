@@ -42,7 +42,7 @@ Go to your [Twitter Developer account](https://developer.twitter.com/), hover ov
 <img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png">
 
 
-Once your app is created select the Keys and Tokens tab. You will see your Consumer API key and Consumer API secret key which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
+<br>Once your app is created select the Keys and Tokens tab. You will see your Consumer API key and Consumer API secret key which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
 
 
 <img width="1440" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
@@ -51,11 +51,11 @@ Once your app is created select the Keys and Tokens tab. You will see your Consu
 
 *Again, if you're using the sample data, then skip to Step 3.*
 
-Log into your ibm cloud account at https://cloud.ibm.com/login, click on Create Resource and search for Object Storage. 
+Log into your ibm cloud account at https://cloud.ibm.com/login, click on Create Resource and search for Object Storage.<br><br>
 
 <img width="1440" alt="cos1" src="https://user-images.githubusercontent.com/15332386/85959761-5aae2900-b9af-11ea-959b-8441e5fdbf71.png">
 
-Choose the lite plan which is free, change the name if you want to and click on Create.
+<br>Choose the lite plan which is free, change the name if you want to and click on Create.
 
 <img width="1440" alt="cos2" src="https://user-images.githubusercontent.com/15332386/85959763-5f72dd00-b9af-11ea-801f-c7334573053b.png">
 
