@@ -204,44 +204,52 @@ IMAGE <br>
  
 Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for Watson Studio select the lite plan to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on **Get Started**. This will launch the Watson Studio platform. <br>
  
-IMAGE<br>
+<img width="1440" alt="WS1" src="https://user-images.githubusercontent.com/15332386/85960261-571ca100-b9b3-11ea-94da-306eef86e266.png">
  
-Click on Create Project and then Create Empty Project. Here you can name your project and give it a description. Make sure to choose the COS that you created before<br>
-IMAGE<br>
+Click on Create Project and then Create Empty Project.
+
+<img width="1440" alt="WS2" src="https://user-images.githubusercontent.com/15332386/85960269-64399000-b9b3-11ea-8d77-7277185a12ac.png">
+
+Give a name your project and give it a description. Make sure to choose the COS that you created before<br>
+
+<img width="1440" alt="WS3" src="https://user-images.githubusercontent.com/15332386/85960270-6865ad80-b9b3-11ea-986d-5baadabfec4d.png">
 
 
 ### Step 5: Create a connection to the COS
  
 Click on Add to projects. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, it means we have access to the data inside it which we need to build our machine learning model with AutoAI. <br>
-IMAGE<br>
+<img width="1440" alt="WS4" src="https://user-images.githubusercontent.com/15332386/85960272-68fe4400-b9b3-11ea-80b5-53cfe5ea88e8.png">
 
 Click on **connection** so we can start creating our connection to our COS <br>
-IMAGE<br>
+
+<img width="961" alt="WS5" src="https://user-images.githubusercontent.com/15332386/85960273-6996da80-b9b3-11ea-9777-433d8189d512.png">
+
+Click on Cloud Object Storage.
+<img width="1440" alt="WS6" src="https://user-images.githubusercontent.com/15332386/85960274-6996da80-b9b3-11ea-82d7-abe832f6118b.png">
 
 Add a name to your connection, and fill the information with the credentials that we got from our first step. <br>
-IMAGE<br>
+<img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/85960276-6a2f7100-b9b3-11ea-9dc4-c07822487f14.png">
 
 Click again on Add to projects and this time click on connected data. Select your source which is the connection created in the previous step, select your bucket and then **tweets.csv** file. Give a name to your asset and click on create. <br>
-IMAGE<br>
+<img width="1440" alt="WS8" src="https://user-images.githubusercontent.com/15332386/85960277-6ac80780-b9b3-11ea-9e06-2f787714f522.png">
 
 ### Step 6: Refine the Data
-Now you can see your data created under assets and you can click on it to see a sample of it. On the top right click on refine so we can refine our data set.<br>
-IMAGE<br>
+<img width="1440" alt="WS9" src="https://user-images.githubusercontent.com/15332386/85960278-6ac80780-b9b3-11ea-8285-39ebee795635.png">
 
 Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, convert column and then choose integer. Repeat the same process for favorits and retweets. <br>
-IMAGE<br>
+<img width="1104" alt="WS10" src="https://user-images.githubusercontent.com/15332386/85960279-6b609e00-b9b3-11ea-8653-d95bfb37e31c.png">
 
 Once you're done, click on save and create job <br>
-IMAGE<br>
+<img width="1433" alt="WS11" src="https://user-images.githubusercontent.com/15332386/85960280-6b609e00-b9b3-11ea-842d-d0fc739ce5be.png">
 
 Give the job a name, and click on Create and Run<br>
-IMAGE<br>
+<img width="1438" alt="WS12" src="https://user-images.githubusercontent.com/15332386/85960281-6bf93480-b9b3-11ea-9906-356b13ff72c7.png">
 
 This job will created a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see the output of this job is a file is named **Tweets_shaped.csv**. Wait unitl the status of the job shows **Completed**. <br>
-IMAGE<br>
+<img width="1440" alt="WS13" src="https://user-images.githubusercontent.com/15332386/85960282-6c91cb00-b9b3-11ea-9f93-d7fce0df6b93.png">
 
 Now you should see 3 assets just like this image. The **Tweets_shaped.csv** is now our main file that we will be using in AutoAI to create our predictive model. <br>
-<IMAGE> <br>
+<img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/85960283-6c91cb00-b9b3-11ea-8f31-2cfef8871480.png">
 
 
 
