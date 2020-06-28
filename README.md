@@ -104,7 +104,7 @@ pip install pyjokes
   ```console
 deactivate
  ```
- <br> Copy the following code and save it into a file called **__main__.py** in the twitterApp directory, and add the corresponding credentials that we got from step 1 (Customer keys) and step 2 (COS credentials)
+ <br> Copy the following code and save it into a file called **__main__.py** in the twitterApp directory, and add the corresponding credentials that we got from step 1 (Customer keys) and step 2 (COS credentials). In addition you can change the twitter handle that you want to analyze (In this example we are analyzing Charlize Theron profile). This code gets the data from twitter and then creates a csv file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a csv file containig tweets info will be uploaded in COS.
  ```python
 import tweepy
 import sys, json
@@ -118,7 +118,7 @@ import ibm_boto3
 # Twitter API credentials
 consumer_key = <"YOUR_CONSUMER_API_KEY">
 consumer_secret = <"YOUR_CONSUMER_API_SECRET_KEY">
-screen_name = "@CharlizeAfrica"  #you can put your twitter username, here we are using Charlize Theron username
+screen_name = "@CharlizeAfrica"  #you can put your twitter username, here we are using Charlize Theron twitter profile to analyze.
 
 def main(dict):
     tweets = get_all_tweets()
@@ -169,18 +169,91 @@ def createFile(tweets):
         print('File Uploaded') 
 ```    
 <br> From the twitterApp directory, create a .zip archive of the virtualenv folder and your **main.py** file. These files must be in the top level of your .zip file.
-```console
-zip -r jokes.zip virtualenv main.py
+```dos
+$ zip -r jokes.zip virtualenv main.py
+```
+<br> Now it's time to push this function to IBM Cloud Log in to your ibm cloud account and make sure to target your organization and space. You can check more about this here https://cloud.ibm.com/docs/cli?topic=cli-ibmcloud_cli#ibmcloud_target .
+```doc
+$ ibmcloud login
 ```
 
-<br> Now it's time to push this function to IBM Cloud. Create an action called twitterAction using the zip folder that was just created
+<br> Create an action called twitterAction using the zip folder that was just created (right click on the file and check get info for Mac or Properties for Windows to get the path), by specifying the entry point which is our **main** function in the code, and the **--kind** flag for runtime
+```dos
+$ ibmcloud fn action create twitterAction </path/to/file/>twitterApp.zip --kind python:3.7 --main main
+```
+<br> Go back to IBM Cloud, and click on cloud functions on the left side of the window. 
+
+IMAGE <br>
+
+Click on Action, make sure the right namespace is selected, you will see the action that was created. Click on it and then click "Invoke" to run it. <br>
+
+IMAGE <br>
+You can run it as well directly from the terminal using this command:
+```dos
+$ ibmcloud fn action invoke twitterAction --result
+```
+<br> If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the cloud function. <br>
+
+IMAGE <br>
+
+ ### Step 4: Create a Watson Studio Service
+ 
+Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for Watson Studio select the lite plan to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on **Get Started**. This will launch the Watson Studio platform. <br>
+ 
+IMAGE<br>
+ 
+Click on Create Project and then Create Empty Project. Here you can name your project and give it a description. Make sure to choose the COS that you created before<br>
+IMAGE<br>
+
+
+### Step 5: Create a connection to the COS
+ 
+Click on Add to projects. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, it means we have access to the data inside it which we need to build our machine learning model with AutoAI. <br>
+IMAGE<br>
+
+Click on **connection** so we can start creating our connection to our COS <br>
+IMAGE<br>
+
+Add a name to your connection, and fill the information with the credentials that we got from our first step. <br>
+IMAGE<br>
+
+Click again on Add to projects and this time click on connected data. Select your source which is the connection created in the previous step, select your bucket and then **tweets.csv** file. Give a name to your asset and click on create. <br>
+IMAGE<br>
+
+### Step 6: Refine the Data
+Now you can see your data created under assets and you can click on it to see a sample of it. On the top right click on refine so we can refine our data set.<br>
+IMAGE<br>
+
+Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, convert column and then choose integer. Repeat the same process for favorits and retweets. <br>
+IMAGE<br>
+
+Once you're done, click on save and create job <br>
+IMAGE<br>
+
+Give the job a name, and click on Create and Run<br>
+IMAGE<br>
+
+This job will created a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see the output of this job is a file is named **Tweets_shaped.csv**. Wait unitl the status of the job shows **Completed**. <br>
+IMAGE<br>
+
+Now you should see 3 assets just like this image. The **Tweets_shaped.csv** is now our main file that we will be using in AutoAI to create our predictive model. <br>
+<IMAGE> <br>
+
+
+
+
+
+
+
+
+
 
 
 <br>Now that we've got our Twitter API keys and secrets, we can use [tweepy](https://github.com/tweepy/tweepy) to save tweets into a CSV file. Free developer accounts on Twitter will limit the amount of tweets that are retrieved, but that's enough for our purposes.
 
 If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/), and then install [tweepy](https://github.com/tweepy/tweepy). This can be done using `pip install tweepy`, if you have [pip](https://pip.pypa.io/en/stable/quickstart/) installed.
 
-Copy the code below into a new file and save it. There are a few lines to update at the top, add values to the variables for keys, secrets, and the twitter handle you want to analyze.
+Copy the code below into a new file and save it. There are a few lines to update at the top, add values to the variables for keys, secrets, and the 
 
 ```python
 import csv
