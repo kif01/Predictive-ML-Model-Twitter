@@ -84,29 +84,29 @@ Usually we create cloud functions directly from IBM cloud, but in our case, we w
 
 If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/). Once installed make sure to install **virtualenv**. 
 ```dos
-pip install virtualenv 
+$ pip install virtualenv 
 ``` 
 <br>Create a directory that you can use to create your virtual environment. In this example I named it twitterApp
-```console
-cd desktop; mkdir twitterApp; cd twitterApp
+```dos
+$ cd desktop; mkdir twitterApp; cd twitterApp
 ```
 
 <br>From the twitterApp directory, create  virtual environment named virtualenv. Your virtual environemt must be named virtualenv
-```console
-virtualenv virtualenv
+```dos
+$ virtualenv virtualenv
  ```
  
  <br>From your directory (in this case twitterApp), activate your **virtualenv** virtual environment
-```console
-source virtualenv/bin/activate
+```dos
+$ source virtualenv/bin/activate
  ```
  <br>Insall the **tweepy** module
- ```console
-pip install pyjokes
+ ```dos
+(virtualenv) $ pip install tweepy
  ```
  <br> Stop the **virtualenv**
-  ```console
-deactivate
+  ```dos
+(virtualenv) $ deactivate
  ```
  <br> Copy the following code and save it into a file called **__main__.py** in the twitterApp directory, and add the corresponding credentials that we got from step 1 (Customer keys) and step 2 (COS credentials). In addition you can change the twitter handle that you want to analyze (In this example we are analyzing Charlize Theron profile). This code gets the data from twitter and then creates a csv file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a csv file containig tweets info will be uploaded in COS.
  ```python
