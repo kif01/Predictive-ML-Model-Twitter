@@ -2,11 +2,11 @@
 
 <!-- markdownlint-disable MD026 -->
 
-In the era that we currently live in, all the focus has shifted towards data. Each day, the amount of data that is generated and consumed is increasing, adding somewhere around 5 exabytes of data. Everything we do generates data, be it turning on and off the light, or commuting from home to work. This data can be used to generate information that can be used for insights to predict and extract patterns. Data Mining or Data Science is the term that has taken the industry abuzz. It is the process of discovering patterns, insights, and associations from data. In this how-to guide we’ll learn how to use data and implement a predictive model on it to get insights. Our intended audience include developers, general users with basic knowledge of programming, and organizations that want to enhance customer experience. It will enable a user to create a predictive model on Watson Studio, which is a cloud-based environment for Data Scientists. By using this how-to user can predict and optimize their twitter interaction and would lead to optimum traffic on their tweets.
+In the era that we currently live in, all the focus has shifted towards data. Each day, the amount of data that is generated and consumed is increasing, adding somewhere around 5 exabytes of data. Everything we do generates data, be it turning on and off the light, or commuting from home to work. This data can be used to generate information that can be used for insights to predict and extract patterns. Data Mining or Data Science is the term that has taken the industry abuzz. It is the process of discovering patterns, insights, and associations from data. In this how-to guide we’ll learn how to use data and implement a predictive model on it to get insights. Our intended audience include developers, general users with basic knowledge of programming, and organizations that want to enhance customer experience. It will enable a user to create a predictive model using AutoAI on Watson Studio, which is a cloud-based environment for Data Scientists. By using this how-to user can predict and optimize their twitter interaction and would lead to optimum traffic on their tweets.
 
 
 ## Learning objectives
-This is an end-ot-end tutorial, showing how we can extract the data, create a csv file and upload it to Cloud Object Storage (COS), how to create a data connection from Watson Studio to COS, and finally to refine the data and use it to build deploy and test our predictive model with AutoAI. 
+This is an end-ot-end tutorial that shows how we can extract the data, create a csv file and upload it to Cloud Object Storage (COS), create a data connection from Watson Studio to COS, and finally to refine the data and use it to build deploy and test our predictive model with AutoAI.<br><br> 
 After completing this how-to, the reader will be able to:
 * Work with Cloud Functions to extract data from Twitter 
 * Learn to create upload a CSV file in COS from a Cloud Function.
@@ -27,49 +27,44 @@ To complete this tutorial it should take around 1 hour.
 
 ### Use sample data or get your own?
 
-The first thing we'll need to do is get a bunch of tweets to analyze. In this step we'll go through how to get a bunch of tweets, but if you're not interested in doing that, we provide a sample data set:
+The first thing we'll need to do is get a bunch of tweets to analyze. In this step we'll go through how to get a bunch of tweets, but if you're not interested in doing that, we provide a sample data set (If you choose to use the sample data set, then you will be skipping the Cloud Function section of this tutorial):
 
-* **[ufone_tweets.csv](static/ufone_tweets.csv)**: Tweets from a Ufone, a phone operator, cleaned up and ready for Watson Studio. (Use this one!)
-* **[ufone_tweets_raw.csv](static/ufone_tweets_raw.csv)**: Same as above, but raw, taken directly from tweepy. (Only added for completeness.)
+* **[ufone_tweets.csv](static/ufone_tweets.csv)**: Tweets from a Ufone, a phone operator, cleaned up and ready to use.
 
-### Step 1: Getting Twitter API access (optional)
+
+### Step 1: Getting Twitter API access
 
 *If you're using the sample data, then skip to Step 2.*
 
-Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets we need to generate our Consumer api keys :<br/>
-Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.<br><br>    
+Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets, we need to generate our **Consumer** api keys :<br/>
+Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.
 
+<img width="1440" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png">
 
-<img width="800" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png">
-
-
-<br>Once your app is created select the Keys and Tokens tab. You will see your Consumer API key and Consumer API secret key which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)<br><br>
-
+Once your app is created select the `Keys and Tokens` tab. You will see your `Consumer API key` and `Consumer API secret key` which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
 
 <img width="1440" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
 
 ### Step 2: Creating a Cloud Object Storage (COS) service in IBM Cloud
 
-*Again, if you're using the sample data, then skip to Step 3.*
-
-Log into your ibm cloud account at https://cloud.ibm.com/login, click on Create Resource and search for Object Storage.<br><br>
+Log into your ibm cloud account at https://cloud.ibm.com/login, click on `Create Resource` and search for **Object Storage**.
 
 <img width="1440" alt="cos1" src="https://user-images.githubusercontent.com/15332386/85959761-5aae2900-b9af-11ea-959b-8441e5fdbf71.png">
 
-<br>Choose the lite plan which is free, change the name if you want to and click on Create.<br>
+Choose the `Lite plan` which is free, change the name if you want to and click on `Create`.
 
 <img width="1440" alt="cos2" src="https://user-images.githubusercontent.com/15332386/85959763-5f72dd00-b9af-11ea-801f-c7334573053b.png">
 
-You can now find your object storage instance created in ressources under Storage. Once you open your instance click on Buckets from the left side panel and create a bucket (You can choose any type of bucket). Make sure to note down the name of your bucket once you create it.
+You can now find your object storage instance created in resources under `Storage`. Once you open your instance, click on `Buckets` from the left side panel and create a bucket (You can choose any type of bucket). Make sure to note down the name of your bucket once you create it.
 
 <img width="1440" alt="cos3" src="https://user-images.githubusercontent.com/15332386/85959764-600b7380-b9af-11ea-8b51-40e762b398bb.png">
 
-Go to service crendentials from the panel, select the service credential that has just been created. If nothing is there then click on "New credential". Click on the arrow to expand the credentials. Note down  the "api_key" and the "iam_serviceid_crn". <br>
+Go to `Service Crendentials` from the panel, select the service credential that has just been created. If nothing is there then click on `New credential` to generate one. Click on the arrow to expand the credentials. Note down the `api_key` and the `iam_serviceid_crn`.
 
 <img width="1440" alt="cos4" src="https://user-images.githubusercontent.com/15332386/85959765-60a40a00-b9af-11ea-824d-c44c07d62e7c.png">
 
 
-<br/>Go to endpoint from the panel. Choose your resilency and region, and note down the private url since it will be needed later in our cloud function.<br/>
+Go to `Endpoint` from the panel. Choose your `Resilency` and `Region`, and note down the `Private url` since it will be needed later in our cloud function.<br/>
 
 <img width="1440" alt="cos5" src="https://user-images.githubusercontent.com/15332386/85959766-613ca080-b9af-11ea-990f-d2aef0d6c83c.png">
 <br/>
@@ -84,35 +79,35 @@ Our bucket is now ready, make sure to have your:
  
  ### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
  
-Usually we create cloud functions directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our python code and package it with a local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
+Usually we create Cloud Functions directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our Python code and package it with a virual local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
 
-If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/). Once installed make sure to install **virtualenv**. 
+If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/). Once installed make sure to install `virtualenv`. 
 ```dos
 $ pip install virtualenv 
 ``` 
-<br>Create a directory that you can use to create your virtual environment. In this example I named it twitterApp
+<br>Create a directory that you can use to create your virtual environment. In this example I named it `twitterApp`
 ```dos
 $ cd desktop; mkdir twitterApp; cd twitterApp
 ```
 
-<br>From the twitterApp directory, create  virtual environment named virtualenv. Your virtual environemt must be named virtualenv
+<br>From the `twitterApp` directory, create  virtual environment named `virtualenv`. Your virtual environemt must be named `virtualenv`
 ```dos
 $ virtualenv virtualenv
  ```
  
- <br>From your directory (in this case twitterApp), activate your **virtualenv** virtual environment
+ <br>From your directory (in this case `twitterApp`), activate your `virtualenv` virtual environment
 ```dos
 $ source virtualenv/bin/activate
  ```
- <br>Insall the **tweepy** module
+ <br>Insall the `tweepy` module
  ```dos
 (virtualenv) $ pip install tweepy
  ```
- <br> Stop the **virtualenv**
+ <br> Stop the `virtualenv`
   ```dos
 (virtualenv) $ deactivate
  ```
- <br> Copy the following code and save it into a file called **__main__.py** in the twitterApp directory, and add the corresponding credentials that we got from step 1 (Customer keys) and step 2 (COS credentials). In addition you can change the twitter handle that you want to analyze (In this example we are analyzing Charlize Theron profile). This code gets the data from twitter and then creates a csv file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a csv file containig tweets info will be uploaded in COS.
+ <br> Copy the following code and save it into a file called `main__.py` in the `twitterApp` directory, and add the corresponding credentials that we got from step 1 (**Customer keys**) and step 2 (**COS credentials**). In addition, you can change the twitter handle that you want to analyze (In this example we are analyzing **Charlize Theron** profile). This code gets the data from twitter and then creates a CSV file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a CSV file containig tweets info will be uploaded in COS.
  ```python
 import tweepy
 import sys, json
@@ -176,41 +171,41 @@ def createFile(tweets):
     else:
         print('File Uploaded') 
 ```    
-<br> From the twitterApp directory, create a .zip archive of the virtualenv folder and your **main.py** file. These files must be in the top level of your .zip file.
+<br> From the `twitterApp` directory, create a .zip archive of the `virtualenv` folder and your `main.py` file. These files must be in the top level of your .zip file.
 ```dos
 $ zip -r jokes.zip virtualenv main.py
 ```
-<br> Now it's time to push this function to IBM Cloud Log in to your ibm cloud account and make sure to target your organization and space. You can check more about this here https://cloud.ibm.com/docs/cli?topic=cli-ibmcloud_cli#ibmcloud_target .
+<br> Now it's time to push this function to IBM Cloud Log in to your IBM Cloud account and make sure to target your organization and space. You can check more about this here https://cloud.ibm.com/docs/cli?topic=cli-ibmcloud_cli#ibmcloud_target .
 ```doc
 $ ibmcloud login
 ```
 
-<br> Create an action called twitterAction using the zip folder that was just created (right click on the file and check get info for Mac or Properties for Windows to get the path), by specifying the entry point which is our **main** function in the code, and the **--kind** flag for runtime
+<br> Create an action called `twitterAction` using the zip folder that was just created (right click on the file and check get info for Mac or Properties for Windows to get the path), by specifying the entry point which is our`main` function in the code, and the `--kind` flag for runtime
 ```dos
 $ ibmcloud fn action create twitterAction </path/to/file/>twitterApp.zip --kind python:3.7 --main main
 ```
-<br> Go back to IBM Cloud, and click on cloud functions on the left side of the window. 
+<br> Go back to IBM Cloud, and click on Cloud Functions on the left side of the window. 
 
 IMAGE <br>
 
-Click on Action, make sure the right namespace is selected, you will see the action that was created. Click on it and then click "Invoke" to run it. <br>
+Click on `Action`, make sure the right namespace is selected, you will see the action that was created. Click on it and then click `Invoke` to run it. <br>
 
 IMAGE <br>
 You can run it as well directly from the terminal using this command:
 ```dos
 $ ibmcloud fn action invoke twitterAction --result
 ```
-<br> If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the cloud function. <br>
+<br> If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function. <br>
 
 IMAGE <br>
 
  ### Step 4: Create a Watson Studio Service
  
-Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for Watson Studio select the lite plan to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on **Get Started**. This will launch the Watson Studio platform.
+Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for **Watson Studio** select the `Lite plan` to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on `Get Started`. This will launch the Watson Studio platform.
  
 <img width="1440" alt="WS1" src="https://user-images.githubusercontent.com/15332386/86030143-25ecb100-ba45-11ea-8424-fa34cf01dec8.png">
  
-Click on Create Project and then Create Empty Project.
+Click on `Create Project` and then `Create Empty Project`.
 
 <img width="1440" alt="WS2" src="https://user-images.githubusercontent.com/15332386/85960269-64399000-b9b3-11ea-8d77-7277185a12ac.png">
 
@@ -221,39 +216,39 @@ Give a name your project and give it a description. Make sure to choose the COS 
 
 ### Step 5: Create a connection to the COS
  
-Click on Add to projects. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, it means we have access to the data inside it which we need to build our machine learning model with AutoAI.
+Click on `Add to projects`. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, we can then have access to the data inside it that we need to build our machine learning model with AutoAI.
 
 <img width="1440" alt="WS4" src="https://user-images.githubusercontent.com/15332386/86039587-b0d4a800-ba53-11ea-9ef2-2868794d1a23.png">
 
-Click on **connection** so we can start creating our connection to our COS 
+Click on `connection` so we can start creating our connection to our COS 
 
 <img width="961" alt="WS5" src="https://user-images.githubusercontent.com/15332386/85960273-6996da80-b9b3-11ea-9777-433d8189d512.png">
 
-Click on Cloud Object Storage.
+Click on `Cloud Object Storage`.
 <img width="1440" alt="WS6" src="https://user-images.githubusercontent.com/15332386/85960274-6996da80-b9b3-11ea-82d7-abe832f6118b.png">
 
-Add a name to your connection, and fill the information with the credentials that we got from our first step.
+Add a name to your connection, and fill the information with the credentials that we got from **step 2** (COS credentials).
 <img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/85960276-6a2f7100-b9b3-11ea-9dc4-c07822487f14.png">
 
-Click again on Add to projects and this time click on connected data. Select your source which is the connection created in the previous step, select your bucket and then **tweets.csv** file. Give a name to your asset and click on create. <br>
+Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose **tweets.csv** file. Give a name to your asset and click on `Create`. <br>
 <img width="1440" alt="WS8" src="https://user-images.githubusercontent.com/15332386/85960277-6ac80780-b9b3-11ea-9e06-2f787714f522.png">
 
 ### Step 6: Refine the Data
 <img width="1440" alt="WS9" src="https://user-images.githubusercontent.com/15332386/85960278-6ac80780-b9b3-11ea-8285-39ebee795635.png">
 
-Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, convert column and then choose integer. Repeat the same process for favorits and retweets. <br>
+Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, `Convert column` and then choose `integer`. Repeat the same process for favorites and retweets. <br>
 <img width="1104" alt="WS10" src="https://user-images.githubusercontent.com/15332386/85960279-6b609e00-b9b3-11ea-8653-d95bfb37e31c.png">
 
-Once you're done, click on save and create job <br>
+Once you're done, click on `save and create job` <br>
 <img width="1433" alt="WS11" src="https://user-images.githubusercontent.com/15332386/85960280-6b609e00-b9b3-11ea-842d-d0fc739ce5be.png">
 
-Give the job a name, and click on Create and Run<br>
+Give the job a name, and click on `Create and Run`<br>
 <img width="1438" alt="WS12" src="https://user-images.githubusercontent.com/15332386/85960281-6bf93480-b9b3-11ea-9906-356b13ff72c7.png">
 
-This job will created a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see the output of this job is a file is named **Tweets_shaped.csv**. Wait unitl the status of the job shows **Completed**. <br>
+This job will create a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see, the output of this job is a file is named **Tweets_shaped.csv**. Wait unitl the status of the job shows **Completed**. <br>
 <img width="1440" alt="WS13" src="https://user-images.githubusercontent.com/15332386/85960282-6c91cb00-b9b3-11ea-9f93-d7fce0df6b93.png">
 
-Now you should see 3 assets just like this image. The **Tweets_shaped.csv** is now our main file that we will be using in AutoAI to create our predictive model. <br>
+Now you should see 3 assets just like the image below. The **Tweets_shaped.csv** is now our main file that we will be using in AutoAI to create our predictive model. <br>
 <img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/85960283-6c91cb00-b9b3-11ea-8f31-2cfef8871480.png">
 
 ### Step 7: Create an AutoAI experiment
@@ -270,11 +265,11 @@ Now you need to add your file, select the **Tweets_shaped.csv** file that was ge
 
 <img width="788" alt="AI3" src="https://user-images.githubusercontent.com/15332386/86002828-f8dad700-ba21-11ea-9045-538b3d631c1f.png">
 
-Here we want to predict the best time to share our tweets, so choose **hour** as the prediction column. You will see that the prediction type is Regression and that's because we want to predict a continous value, and the optimized metric is RMSE (Root Mean Squared Error). You can change and customize your experiemnt if you want by clicking on **Experimenty Setting** 
+Here we want to predict the best time to share our tweets, so choose **hour** as the prediction column. You will see that the prediction type is Regression and that's because we want to predict a continous value, and the optimized metric is RMSE (Root Mean Squared Error). You can change and customize your experiment if you want by clicking on `Experimenty Setting` 
 
 <img width="1423" alt="AI4" src="https://user-images.githubusercontent.com/15332386/86002830-f9736d80-ba21-11ea-815a-bf976481e529.png">
 
-In the Experiment settings, go to prediction. Here you can see all the algorithms that can be used in our experiment. You can change the number of algortithms to use. For example you can choose 3, which means that the experiment will use the top 3 algorithms for our use case. For every algorithms, AutoAI generates 4 pipelines, (a new customization will be added to the pipelines). In other words, the first pipeline is the regular one with no enhancement added, the second one is with HPO (Hyperparameter Optimization), the third one is with HPO and Feature Engineering and the last one is with HPO, Feature Engineering and another HPO. Since here we are using 3 algortithms, we will have a total of 12 pipelines (3x4=12), so AutoAI will be comparing 12 candidates to find our best model.
+In the Experiment settings, go to prediction. Here you can see all the algorithms that we can use in our experiment. You can change the number of algortithms to use. For example you can choose 3, which means that the experiment will use the top 3 algorithms for our use case. For every algorithms, AutoAI generates 4 pipelines. In other words, the first pipeline is the regular one with no enhancement added, the second one is with HPO (Hyperparameter Optimization), the third one is with HPO and Feature Engineering and the last one is with HPO, Feature Engineering and another HPO. Since here we are using 3 algortithms, we will have a total of 12 pipelines (3x4=12), so AutoAI will build and generate 12 candidates to find our best model.
 
 <img width="1437" alt="AI5" src="https://user-images.githubusercontent.com/15332386/86002832-fa0c0400-ba21-11ea-9d3d-06fead0acfb2.png">
 
@@ -284,11 +279,11 @@ AutuAI will be generating our 12 best models for our use case. There are differe
 
 <img width="1439" alt="AI6" src="https://user-images.githubusercontent.com/15332386/86002836-faa49a80-ba21-11ea-84f1-4c33fd4b7a30.png">
 
-You can click on swipe view to check the **Progress Map** which is another way to visualize how AutoAI generated our pipelines in a sequence way.
+You can click on `swipe view` to check the **Progress Map** which is another way to visualize how AutoAI generated our pipelines in a sequence way.
 
 <img width="1440" alt="AI7" src="https://user-images.githubusercontent.com/15332386/86002838-faa49a80-ba21-11ea-9d77-c08c6c56d014.png">
 
-You can see the **Pipeline Leaderboard** to check which model is the best. In our case pipeline number 12 is the best model using Random Forest Regressor will all three enhancements (First HPO, Feature Engineering and the second HPO).
+You can see the **Pipeline Leaderboard** to check which model is the best. In our case, **Pipeline 12** is the best model using Random Forest Regressor will all three enhancements (First HPO, Feature Engineering and the second HPO).
 
 <img width="1440" alt="AI8" src="https://user-images.githubusercontent.com/15332386/86002839-fb3d3100-ba21-11ea-8ed2-06f25245da53.png">
 
@@ -296,27 +291,28 @@ AutoAI shows you the comparison between all these pipelines. If you click **Pipe
 
 <img width="1440" alt="AI9" src="https://user-images.githubusercontent.com/15332386/86002840-fbd5c780-ba21-11ea-86d3-c983fa969b94.png">
 
-Click on Pipeline 12 since it's our best model so can get a better understanding of it. For example you can its check **Feature importance** that shows the features that are keys in making deciosion for our predictive model. In this example, *retweets* is the most importanr factor for the prediction. We can see new featured generated like **NewFeature_3** and **NewFeature_0**. These are combinations of different features (for example a combination of retweets and favorites) that are generated with feature engineering to enhance the model.
+Click on Pipeline 12 since it's our best model so can get a better understanding of it. For example you can check its **Feature importance** that shows the features that are keys in making deciosion for our predictive model. In this example, **retweets** is the most important factor for the prediction. We can see new featured generated like **NewFeature_3** and **NewFeature_0**. These are combinations of different features (for example a combination of retweets and favorites) that are generated with feature engineering to enhance the model.
 
 <img width="1106" alt="AI10" src="https://user-images.githubusercontent.com/15332386/86002841-fbd5c780-ba21-11ea-9c11-c9e196ef0e00.png">
 
 ### Step 9: Save and Deploy the Model
 
-Let's save and deploy our model so we can start using it. Click on `Save as` and choose `Model`. This will save our model and you can access it from the main dashboard of our project in Assets under Models section.
+Let's save and deploy our model so we can start using it. Click on `Save as` and choose `Model`. This will save our model and you can now access it from the main dashboard of your project in `Assets` under `Models` section.
 
 <img width="1440" alt="AI11" src="https://user-images.githubusercontent.com/15332386/86002842-fc6e5e00-ba21-11ea-9e0e-2535cb0a011b.png">
 
-Click on this new created model, select the `Deployments Tab` and click `Add Deployment` to create our deployment where you must give it a name. This is web deployment that can be accessible using a REST call.
+Click on this new created model, select the `Deployments Tab` and click `Add Deployment` to create our deployment where you must give it a name. This is a web deployment that can be accessible using a REST call.
 
 <img width="1440" alt="AI12" src="https://user-images.githubusercontent.com/15332386/86002847-fd06f480-ba21-11ea-937a-245ee7aa3b77.png">
 
-Wait till the status of the deployment is **Ready** in the `Deployment`. Once it's ready, click on the deypoyment's name.
+Wait till the status of the deployment is **Ready** in the `Deployment` tab. Once it's ready, click on the deypoyment's name.
 
 <img width="1422" alt="AI13" src="https://user-images.githubusercontent.com/15332386/86013620-655cd280-ba30-11ea-93d4-b53605f1e803.png">
 
 ### Step 10: Test the model
 
-Now our that model is ready, we can start using it. Select the `Test` tab and fill the fields with some data. You can put the data in a JSON format if you prefer (this is easier in cases where we have a lot of fields, but here we have only 3 fields). Click `Predict` and we will see the result in `values`. In this example we have the value of 14.5 which is 2:30 pm. This means the best time to share a tweet that can get around 7000 retweets and 2000 favorites is 2:30 pm for Charlize Theron (Remember here that we are using Charlize Theron's data (as we saw in step 3) so this time is suitable for Charlize. You can put your own user name in the cloud function if you want to predict the time for your account). If you want to inplmenent this model in your application check the `Implmentation` . It shows the endpoint url and code snippets for different programming languages (`cURL`, `Java`, `JavaScript`, `Python` and `Scala` snippets) that you can use for your application.
+Our model is now ready, so we can start using it. Select the `Test` tab and fill the fields with some data. You can put the data in a JSON format if you prefer (this is easier in cases where we have a lot of fields, but here we have only 3 fields). Click `Predict` and you will see the result in `values`. In this example we have the value of 14.5 which is 2:30 pm. This means the best time to share a tweet that can get around 7000 retweets and 2000 favorites is 2:30 pm for Charlize Theron (Remember here we are using Charlize Theron's data (as we saw in **step 3**) so this time is suitable for Charlize. You can put your own user name in the cloud function if you want to predict the best time for your account).<br> 
+If you want to inplmenent this model in your application check the `Implmentation` . It shows the endpoint url and code snippets for different programming languages (`cURL`, `Java`, `JavaScript`, `Python` and `Scala` snippets) that you can use for your application.
 
 <img width="872" alt="AI14" src="https://user-images.githubusercontent.com/15332386/86014206-13687c80-ba31-11ea-81e7-95e61de33c1c.png">
 
