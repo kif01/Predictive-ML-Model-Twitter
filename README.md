@@ -51,7 +51,7 @@ Log into your ibm cloud account at https://cloud.ibm.com/login, click on `Create
 
 <img width="1440" alt="cos1" src="https://user-images.githubusercontent.com/15332386/85959761-5aae2900-b9af-11ea-959b-8441e5fdbf71.png">
 
-Choose the `Lite plan` which is free, change the name if you want to and click on `Create`.
+Choose the `Lite` plan which is free, change the name if you want to and click on `Create`.
 
 <img width="1440" alt="cos2" src="https://user-images.githubusercontent.com/15332386/85959763-5f72dd00-b9af-11ea-801f-c7334573053b.png">
 
@@ -85,29 +85,30 @@ If you don't have Python, then [download and install the latest version](https:/
 ```dos
 $ pip install virtualenv 
 ``` 
-<br>Create a directory that you can use to create your virtual environment. In this example I named it `twitterApp`
+Create a directory that you can use to create your virtual environment. In this example I named it `twitterApp`.
 ```dos
 $ cd desktop; mkdir twitterApp; cd twitterApp
 ```
 
-<br>From the `twitterApp` directory, create  virtual environment named `virtualenv`. Your virtual environemt must be named `virtualenv`
+<br>From the `twitterApp` directory, create virtual environment named `virtualenv`. Your virtual environemt must be named `virtualenv`.
 ```dos
 $ virtualenv virtualenv
  ```
  
- <br>From your directory (in this case `twitterApp`), activate your `virtualenv` virtual environment
+ <br>From your directory (in this case `twitterApp`), activate your `virtualenv` virtual environment.
 ```dos
 $ source virtualenv/bin/activate
  ```
- <br>Insall the `tweepy` module
+ <br>Insall the `tweepy` module.
  ```dos
 (virtualenv) $ pip install tweepy
  ```
- <br> Stop the `virtualenv`
+Stop the `virtualenv.`
   ```dos
 (virtualenv) $ deactivate
  ```
-Copy the following code and save it into a file called `main.py` in the `twitterApp` directory, and add the corresponding credentials that we got from step 1 (**Customer keys**) and step 2 (**COS credentials**). In addition, you can change the twitter handle that you want to analyze (In this example we are analyzing **Charlize Theron** profile). This code gets the data from twitter and then creates a CSV file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a CSV file containig tweets info will be uploaded in COS.
+Copy the following code and save it into a file called `main.py` in the `twitterApp` directory, and add the corresponding credentials that we got from step 1 (**Customer keys**) and step 2 (**COS credentials**). In addition, you can change the twitter handle that you want to analyze (In this example we are using **Charlize Theron**'s twitter handle to analyze).<br>
+This code gets the data from twitter and then creates a CSV file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a CSV file containig tweets info will be uploaded in COS.
  ```python
 import tweepy
 import sys, json
@@ -171,31 +172,31 @@ def createFile(tweets):
     else:
         print('File Uploaded') 
 ```    
-<br>From the `twitterApp` directory, create a .zip archive of the `virtualenv` folder and your `main.py` file. These files must be in the top level of your .zip file.
+From the `twitterApp` directory, create a .zip archive of the `virtualenv` folder and your `main.py` file. These files must be in the top level of your .zip file.
 ```dos
 $ zip -r twitterApp.zip virtualenv main.py
 ```
-<br> Now it's time to push this function to IBM Cloud Log in to your IBM Cloud account and make sure to target your organization and space. You can check more about this here https://cloud.ibm.com/docs/cli?topic=cli-ibmcloud_cli#ibmcloud_target .
+Now it's time to push this function to IBM Cloud Log in to your IBM Cloud account and make sure to target your organization and space. You can check more about this here https://cloud.ibm.com/docs/cli?topic=cli-ibmcloud_cli#ibmcloud_target .
 ```doc
 $ ibmcloud login
 ```
 
-<br> Create an action called `twitterAction` using the zip folder that was just created (right click on the file and check get info for Mac or Properties for Windows to get the path), by specifying the entry point which is our`main` function in the code, and the `--kind` flag for runtime
+Create an action called `twitterAction` using the zip folder that was just created (right click on the file and check get info for Mac or Properties for Windows to get the path), by specifying the entry point which is our`main` function in the code, and the `--kind` flag for runtime.
 ```dos
 $ ibmcloud fn action create twitterAction </path/to/file/>twitterApp.zip --kind python:3.7 --main main
 ```
-<br> Go back to IBM Cloud, and click on Cloud Functions on the left side of the window. 
+Go back to IBM Cloud, and click on Cloud Functions on the left side of the window. 
 
 IMAGE <br>
 
-Click on `Action`, make sure the right namespace is selected, you will see the action that was created. Click on it and then click `Invoke` to run it. <br>
+Click on `Action`, make sure the right namespace is selected, you will see the action that was created. Click on it and then click `Invoke` to run it.
 
 IMAGE <br>
 You can run it as well directly from the terminal using this command:
 ```dos
 $ ibmcloud fn action invoke twitterAction --result
 ```
-<br> If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function. <br>
+If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function. 
 
 IMAGE <br>
 
