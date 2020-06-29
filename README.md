@@ -39,7 +39,7 @@ The first thing we'll need to do is get a bunch of tweets to analyze. In this st
 Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets, we need to generate our **Consumer** api keys :<br/>
 Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.
 
-<img width="1440" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/85959798-8e894e80-b9af-11ea-8dc2-ef78b689b614.png">
+<img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/86057165-b3dd9180-ba6f-11ea-9f91-3f2f6e4178bc.png">
 
 Once your app is created select the `Keys and Tokens` tab. You will see your `Consumer API key` and `Consumer API secret key` which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
 
@@ -252,16 +252,16 @@ Click on `connection` so we can start creating our connection to our COS
 <img width="961" alt="WS5" src="https://user-images.githubusercontent.com/15332386/85960273-6996da80-b9b3-11ea-9777-433d8189d512.png">
 
 Click on `Cloud Object Storage`.
-<img width="1440" alt="WS6" src="https://user-images.githubusercontent.com/15332386/85960274-6996da80-b9b3-11ea-82d7-abe832f6118b.png">
+<img width="1440" alt="WS6" src="https://user-images.githubusercontent.com/15332386/86056964-5c3f2600-ba6f-11ea-906c-e75063c2df3f.png">
 
 Add a name to your connection, and fill the information with the credentials that we got from **step 2** (COS credentials).
-<img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/85960276-6a2f7100-b9b3-11ea-9dc4-c07822487f14.png">
+<img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/86056974-619c7080-ba6f-11ea-881b-8eed376b33bf.png">
 
 Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose `tweets.csv` file. Give a name to your asset and click on `Create`. <br>
-<img width="1440" alt="WS8" src="https://user-images.githubusercontent.com/15332386/85960277-6ac80780-b9b3-11ea-9e06-2f787714f522.png">
+<img width="1440" alt="WS8" src="https://user-images.githubusercontent.com/15332386/86056979-63663400-ba6f-11ea-8350-d58eff8d392e.png">
 
 ### Step 6: Refine the Data
-<img width="1440" alt="WS9" src="https://user-images.githubusercontent.com/15332386/85960278-6ac80780-b9b3-11ea-8285-39ebee795635.png">
+<img width="1440" alt="WS9" src="https://user-images.githubusercontent.com/15332386/86056984-652ff780-ba6f-11ea-9f0d-8681a171dda7.png">
 
 Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, `Convert column` and then choose `integer`. Repeat the same process for favorites and retweets. <br>
 <img width="1104" alt="WS10" src="https://user-images.githubusercontent.com/15332386/85960279-6b609e00-b9b3-11ea-8653-d95bfb37e31c.png">
@@ -270,13 +270,13 @@ Once you're done, click on `save and create job` <br>
 <img width="1433" alt="WS11" src="https://user-images.githubusercontent.com/15332386/85960280-6b609e00-b9b3-11ea-842d-d0fc739ce5be.png">
 
 Give the job a name, and click on `Create and Run`<br>
-<img width="1438" alt="WS12" src="https://user-images.githubusercontent.com/15332386/85960281-6bf93480-b9b3-11ea-9906-356b13ff72c7.png">
+<img width="1438" alt="WS12" src="https://user-images.githubusercontent.com/15332386/86056987-65c88e00-ba6f-11ea-8f48-d26ec9c99569.png">
 
 This job will create a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see, the output of this job is a file is named `Tweets_shaped.csv`. Wait unitl the status of the job shows **Completed**. <br>
-<img width="1440" alt="WS13" src="https://user-images.githubusercontent.com/15332386/85960282-6c91cb00-b9b3-11ea-9f93-d7fce0df6b93.png">
+<img width="1440" alt="WS13" src="https://user-images.githubusercontent.com/15332386/86056989-66612480-ba6f-11ea-9dc5-ce108a0a8a4f.png">
 
 Now you should see 3 assets just like the image below. The `Tweets_shaped.csv` is now our main file that we will be using in AutoAI to create our predictive model. <br>
-<img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/85960283-6c91cb00-b9b3-11ea-8f31-2cfef8871480.png">
+<img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/86056992-66f9bb00-ba6f-11ea-8930-62728d0a7ef3.png">
 
 ### Step 7: Create an AutoAI experiment
 
