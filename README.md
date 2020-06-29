@@ -6,7 +6,7 @@ In the era that we currently live in, all the focus has shifted towards data. Ea
 
 
 ## Learning objectives
-This is an end-ot-end tutorial that shows how we can extract the data, create a csv file and upload it to Cloud Object Storage (COS), create a data connection from Watson Studio to COS, and finally to refine the data and use it to build deploy and test our predictive model with AutoAI.<br><br> 
+This is an end-to-end tutorial that shows how we can extract the data, create a csv file and upload it to Cloud Object Storage (COS), create a data connection from Watson Studio to COS, and finally to refine the data and use it to build deploy and test our predictive model with AutoAI.<br><br> 
 After completing this how-to, the reader will be able to:
 * Work with Cloud Functions to extract data from Twitter 
 * Learn to create upload a CSV file in COS from a Cloud Function.
