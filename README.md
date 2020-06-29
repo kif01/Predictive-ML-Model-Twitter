@@ -93,17 +93,15 @@ Create a directory that you can use to create your virtual environment. In this 
 ```dos
 $ cd desktop; mkdir twitterApp; cd twitterApp
 ```
-
-<br>From the `twitterApp` directory, create virtual environment named `virtualenv`. Your virtual environemt must be named `virtualenv`.
+From the `twitterApp` directory, create virtual environment named `virtualenv`. Your virtual environemt must be named `virtualenv`.
 ```dos
 $ virtualenv virtualenv
  ```
- 
- <br>From your directory (in this case `twitterApp`), activate your `virtualenv` virtual environment.
+From your directory (in this case `twitterApp`), activate your `virtualenv` virtual environment.
 ```dos
 $ source virtualenv/bin/activate
  ```
- <br>Insall the `tweepy` module.
+Insall the `tweepy` module.
  ```dos
 (virtualenv) $ pip install tweepy
  ```
@@ -234,7 +232,7 @@ Click on `Create Project` and then `Create Empty Project`.
 
 <img width="1440" alt="WS2" src="https://user-images.githubusercontent.com/15332386/86057477-4aaa4e00-ba70-11ea-81d2-bd84db17be2e.png">
 
-Give a name your project and give it a description. Make sure to choose the COS that you created before<br>
+Give a name your project and give it a description. Make sure to choose the COS that you created before.
 
 <img width="1440" alt="WS3" src="https://user-images.githubusercontent.com/15332386/86039582-add9b780-ba53-11ea-920b-6c813218916a.png">
 
@@ -244,7 +242,7 @@ Click on `Add to projects`. Here you will see all kind of assets that we can use
 
 <img width="1440" alt="WS4" src="https://user-images.githubusercontent.com/15332386/86039587-b0d4a800-ba53-11ea-9ef2-2868794d1a23.png">
 
-Click on `connection` so we can start creating our connection to our COS 
+Click on `connection` so we can start creating our connection to our COS. 
 
 <img width="961" alt="WS5" src="https://user-images.githubusercontent.com/15332386/85960273-6996da80-b9b3-11ea-9777-433d8189d512.png">
 
@@ -254,25 +252,31 @@ Click on `Cloud Object Storage`.
 Add a name to your connection, and fill the information with the credentials that we got from **step 2** (COS credentials).
 <img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/86056974-619c7080-ba6f-11ea-881b-8eed376b33bf.png">
 
-Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose `tweets.csv` file. Give a name to your asset and click on `Create`. <br>
+Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose `tweets.csv` file. Give a name to your asset and click on `Create`.
+
 <img width="1440" alt="WS8" src="https://user-images.githubusercontent.com/15332386/86056979-63663400-ba6f-11ea-8350-d58eff8d392e.png">
 
 ### Step 6: Refine the Data
 <img width="1440" alt="WS9" src="https://user-images.githubusercontent.com/15332386/86056984-652ff780-ba6f-11ea-9f0d-8681a171dda7.png">
 
-Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, `Convert column` and then choose `integer`. Repeat the same process for favorites and retweets. <br>
+Our data is already prepared  but we just need to convert the rows hour, favorites and retweets to integer. Let's start with hour: Click on the 3 dots, `Convert column` and then choose `integer`. Repeat the same process for favorites and retweets.
+
 <img width="1104" alt="WS10" src="https://user-images.githubusercontent.com/15332386/85960279-6b609e00-b9b3-11ea-8653-d95bfb37e31c.png">
 
-Once you're done, click on `save and create job` <br>
+Once you're done, click on `save and create job`.
+
 <img width="1433" alt="WS11" src="https://user-images.githubusercontent.com/15332386/85960280-6b609e00-b9b3-11ea-842d-d0fc739ce5be.png">
 
-Give the job a name, and click on `Create and Run`<br>
+Give the job a name, and click on `Create and Run`.
+
 <img width="1438" alt="WS12" src="https://user-images.githubusercontent.com/15332386/86056987-65c88e00-ba6f-11ea-8f48-d26ec9c99569.png">
 
-This job will create a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see, the output of this job is a file is named `Tweets_shaped.csv`. Wait unitl the status of the job shows **Completed**. <br>
+This job will create a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see, the output of this job is a file is named `Tweets_shaped.csv`. Wait unitl the status of the job shows **Completed**.
+
 <img width="1440" alt="WS13" src="https://user-images.githubusercontent.com/15332386/86056989-66612480-ba6f-11ea-9dc5-ce108a0a8a4f.png">
 
-Now you should see 3 assets just like the image below. The `Tweets_shaped.csv` is now our main file that we will be using in AutoAI to create our predictive model. <br>
+Now you should see 3 assets just like the image below. The `Tweets_shaped.csv` is now our main file that we will be using in AutoAI to create our predictive model.
+
 <img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/86056992-66f9bb00-ba6f-11ea-8930-62728d0a7ef3.png">
 
 ### Step 7: Create an AutoAI experiment
@@ -289,7 +293,7 @@ Now you need to add your file, select the `Tweets_shaped.csv` file that was gene
 
 <img width="788" alt="AI3" src="https://user-images.githubusercontent.com/15332386/86002828-f8dad700-ba21-11ea-9045-538b3d631c1f.png">
 
-Here we want to predict the best time to share our tweets, so choose **hour** as the prediction column. You will see that the prediction type is Regression and that's because we want to predict a continous value, and the optimized metric is RMSE (Root Mean Squared Error). You can change and customize your experiment if you want by clicking on `Experimenty Setting` 
+Here we want to predict the best time to share our tweets, so choose **hour** as the prediction column. You will see that the prediction type is Regression and that's because we want to predict a continous value, and the optimized metric is RMSE (Root Mean Squared Error). You can change and customize your experiment if you want by clicking on `Experimenty Setting`. 
 
 <img width="1423" alt="AI4" src="https://user-images.githubusercontent.com/15332386/86002830-f9736d80-ba21-11ea-815a-bf976481e529.png">
 
