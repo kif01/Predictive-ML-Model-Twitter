@@ -4,12 +4,13 @@
 
 In the era that we currently live in, all the focus has shifted towards data. Each day, the amount of data that is generated and consumed is increasing, adding somewhere around 5 exabytes of data. Everything we do generates data, be it turning on and off the light, or commuting from home to work. This data can be used to generate information that can be used for insights to predict and extract patterns. Data Mining or Data Science is the term that has taken the industry abuzz. It is the process of discovering patterns, insights, and associations from data. In this how-to guide we’ll learn how to use data and implement a predictive model on it to get insights. Our intended audience include developers, general users with basic knowledge of programming, and organizations that want to enhance customer experience. It will enable a user to create a predictive model on Watson Studio, which is a cloud-based environment for Data Scientists. By using this how-to user can predict and optimize their twitter interaction and would lead to optimum traffic on their tweets.
 
-## Learning objectives
 
+## Learning objectives
+This is an end-ot-end tutorial, showing how we can extract the data, create a csv file and upload it to Cloud Object Storage (COS), how to create a data connection from Watson Studio to COS, and finally to refine the data and use it to build deploy and test our predictive model with AutoAI. 
 After completing this how-to, the reader will be able to:
 * Work with Cloud Functions to extract data from Twitter 
 * Learn to create upload a CSV file in COS from a Cloud Function.
-* Learn Watson Studio and AutoAI to build a predictive model using CSV data.
+* Learn how to use Watson Studio and AutoAI to build a predictive model using CSV data.
 * Leverage Twitter to predict and optimize their twitter interactions.
 
 ## Prerequisites
@@ -33,7 +34,7 @@ The first thing we'll need to do is get a bunch of tweets to analyze. In this st
 
 ### Step 1: Getting Twitter API access (optional)
 
-*If you're using the sample data, then skip to Step 3.*
+*If you're using the sample data, then skip to Step 2.*
 
 Before we use [tweepy](https://github.com/tweepy/tweepy) to get tweets we need to generate our Consumer api keys :<br/>
 Go to your [Twitter Developer account](https://developer.twitter.com/), hover over your name on the top right create your app. Fill the required information.<br><br>    
@@ -78,7 +79,10 @@ Our bucket is now ready, make sure to have your:
  * Service ID
  * Endpoint Url
  
- ### Step 3: Create a Cloud Function
+ *Again, if you're using the sample data, then you can directly upload the file in your bucket, and skip step 3 (Jump to step 4).*
+ 
+ 
+ ### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
  
 Usually we create cloud functions directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our python code and package it with a local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
 
@@ -251,150 +255,70 @@ This job will created a new data set based on the one that we already have but w
 Now you should see 3 assets just like this image. The **Tweets_shaped.csv** is now our main file that we will be using in AutoAI to create our predictive model. <br>
 <img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/85960283-6c91cb00-b9b3-11ea-8f31-2cfef8871480.png">
 
+### Step 7: Create an AutoAI experiment
 
+Click again on `Add to projects` and and this time choose `AutoAI experiment`.
 
+<img width="850" alt="AI1" src="https://user-images.githubusercontent.com/15332386/86002816-f4162300-ba21-11ea-82cc-3434b458df24.png">
 
+Give a name to your project and choose a machine learning instance. This is needed so we can deploy our model at the end. If you don't have one, Watson Studio will ask you to directly create it and you will be bale to proceed normally.
 
+<img width="1440" alt="AI2" src="https://user-images.githubusercontent.com/15332386/86002824-f8424080-ba21-11ea-82b0-766288acce00.png">
 
+Now you need to add your file, select the **Tweets_shaped.csv** file that was generated from the Data Refinery.
 
+<img width="788" alt="AI3" src="https://user-images.githubusercontent.com/15332386/86002828-f8dad700-ba21-11ea-9045-538b3d631c1f.png">
 
+Here we want to predict the best time to share our tweets, so choose **hour** as the prediction column. You will see that the prediction type is Regression and that's because we want to predict a continous value, and the optimized metric is RMSE (Root Mean Squared Error). You can change and customize your experiemnt if you want by clicking on **Experimenty Setting** 
 
+<img width="1423" alt="AI4" src="https://user-images.githubusercontent.com/15332386/86002830-f9736d80-ba21-11ea-815a-bf976481e529.png">
 
+In the Experiment settings, go to prediction. Here you can see all the algorithms that can be used in our experiment. You can change the number of algortithms to use. For example you can choose 3, which means that the experiment will use the top 3 algorithms for our use case. For every algorithms, AutoAI generates 4 pipelines, (a new customization will be added to the pipelines). In other words, the first pipeline is the regular one with no enhancement added, the second one is with HPO (Hyperparameter Optimization), the third one is with HPO and Feature Engineering and the last one is with HPO, Feature Engineering and another HPO. Since here we are using 3 algortithms, we will have a total of 12 pipelines (3x4=12), so AutoAI will be comparing 12 candidates to find our best model.
 
-<br>Now that we've got our Twitter API keys and secrets, we can use [tweepy](https://github.com/tweepy/tweepy) to save tweets into a CSV file. Free developer accounts on Twitter will limit the amount of tweets that are retrieved, but that's enough for our purposes.
+<img width="1437" alt="AI5" src="https://user-images.githubusercontent.com/15332386/86002832-fa0c0400-ba21-11ea-9d3d-06fead0acfb2.png">
 
-If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/), and then install [tweepy](https://github.com/tweepy/tweepy). This can be done using `pip install tweepy`, if you have [pip](https://pip.pypa.io/en/stable/quickstart/) installed.
+### Step 8: Build and Evaluate the models
 
-Copy the code below into a new file and save it. There are a few lines to update at the top, add values to the variables for keys, secrets, and the 
+AutuAI will be generating our 12 best models for our use case. There are different ways to understand and visualize the results. Here we are looking at a **Relationship Map** which shows how AutoAI is building and generating the pipelines. Every color represent a type of algorithms and each one has its 4 pipelines that we discussed about in the previous step.
 
-```python
-import csv
-import tweepy
+<img width="1439" alt="AI6" src="https://user-images.githubusercontent.com/15332386/86002836-faa49a80-ba21-11ea-84f1-4c33fd4b7a30.png">
 
-# Twitter API credentials
-consumer_key = ""
-consumer_secret = ""
-access_key = ""
-access_secret = ""
-screen_name = ""
+You can click on swipe view to check the **Progress Map** which is another way to visualize how AutoAI generated our pipelines in a sequence way.
 
+<img width="1440" alt="AI7" src="https://user-images.githubusercontent.com/15332386/86002838-faa49a80-ba21-11ea-9d77-c08c6c56d014.png">
 
-def get_all_tweets():
-    # initialize tweepy
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_key, access_secret)
-    api = tweepy.API(auth)
+You can see the **Pipeline Leaderboard** to check which model is the best. In our case pipeline number 12 is the best model using Random Forest Regressor will all three enhancements (First HPO, Feature Engineering and the second HPO).
 
-    alltweets = []
+<img width="1440" alt="AI8" src="https://user-images.githubusercontent.com/15332386/86002839-fb3d3100-ba21-11ea-8ed2-06f25245da53.png">
 
-    # request first 200 tweets, the max allowed
-    new_tweets = api.user_timeline(screen_name=screen_name, count=200)
-    alltweets.extend(new_tweets)
-    oldest = alltweets[-1].id - 1
+AutoAI shows you the comparison between all these pipelines. If you click **Pipeline Comparison** you will see a metric chart comparing our candidates.
 
-    # keep grabbing tweets until the 3200 tweet limit is hit
-    while len(new_tweets) > 0:
-        print("getting tweets before id: %s" % (oldest))
-        new_tweets = api.user_timeline(screen_name=screen_name,
-                                       count=200,
-                                       max_id=oldest)
-        alltweets.extend(new_tweets)
-        oldest = alltweets[-1].id - 1
-        print("...%s tweets downloaded so far" % (len(alltweets)))
+<img width="1440" alt="AI9" src="https://user-images.githubusercontent.com/15332386/86002840-fbd5c780-ba21-11ea-86d3-c983fa969b94.png">
 
-    return alltweets
+Click on Pipeline 12 since it's our best model so can get a better understanding of it. For example you can its check **Feature importance** that shows the features that are keys in making deciosion for our predictive model. In this example, *retweets* is the most importanr factor for the prediction. We can see new featured generated like **NewFeature_3** and **NewFeature_0**. These are combinations of different features (for example a combination of retweets and favorites) that are generated with feature engineering to enhance the model.
 
+<img width="1106" alt="AI10" src="https://user-images.githubusercontent.com/15332386/86002841-fbd5c780-ba21-11ea-9c11-c9e196ef0e00.png">
 
-def write_tweets_to_csv(tweets):
-    # transform the tweepy tweets into an array
-    outtweets = [[tweet.id_str, tweet.created_at,
-                  tweet.text.encode("utf-8"), tweet.retweet_count,
-                  tweet.favorite_count] for tweet in tweets]
+### Step 9: Save and Deploy the Model
 
-    # write the csv
-    with open('%s_tweets.csv' % screen_name, 'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(["id", "created_at", "text", "Retweets", "Favorites"])
-        writer.writerows(outtweets)
+Let's save and deploy our model so we can start using it. Click on `Save as` and choose `Model`. This will save our model and you can access it from the main dashboard of our project in Assets under Models section.
 
-    pass
+<img width="1440" alt="AI11" src="https://user-images.githubusercontent.com/15332386/86002842-fc6e5e00-ba21-11ea-9e0e-2535cb0a011b.png">
 
+Click on this new created model, select the `Deployments Tab` and click `Add Deployment` to create our deployment where you must give it a name. This is web deployment that can be accessible using a REST call.
 
-if __name__ == '__main__':
-    # pass in the username of the account you want to download
-    tweets = get_all_tweets()
-    write_tweets_to_csv(tweets)
-```
+<img width="1440" alt="AI12" src="https://user-images.githubusercontent.com/15332386/86002847-fd06f480-ba21-11ea-937a-245ee7aa3b77.png">
 
-Run the script by running `python tweets.py` in a terminal, a CSV file will be output, containing various tweets and information about those tweets, for example:
+Wait till the status of the deployment is **Ready** in the `Deployment`. Once it's ready, click on the deypoyment's name.
 
-![](images/csv1.png)
+<img width="1422" alt="AI13" src="https://user-images.githubusercontent.com/15332386/86013620-655cd280-ba30-11ea-93d4-b53605f1e803.png">
 
-You can remove the `id` and `created_at` columns, and remove empty rows to clean the data a bit.
+### Step 10: Test the model
 
-![](images/csv2.png)
+Now our that model is ready, we can start using it. Select the `Test` tab and fill the fields with some data. You can put the data in a JSON format if you prefer (this is easier in cases where we have a lot of fields, but here we have only 3 fields). Click `Predict` and we will see the result in `values`. In this example we have the value of 14.5 which is 2:30 pm. This means the best time to share a tweet that can get around 7000 retweets and 2000 favorites is 2:30 pm for Charlize Theron (Remember here that we are using Charlize Theron's data (as we saw in step 3) so this time is suitable for Charlize. You can put your own user name in the cloud function if you want to predict the time for your account). If you want to inplmenent this model in your application check the `Implmentation` . It shows the endpoint url and code snippets for different programming languages (`cURL`, `Java`, `JavaScript`, `Python` and `Scala` snippets) that you can use for your application.
 
-### Step 3: Log into Watson Studio
+<img width="872" alt="AI14" src="https://user-images.githubusercontent.com/15332386/86014206-13687c80-ba31-11ea-81e7-95e61de33c1c.png">
 
-IBM Watson Studio is an easy-to-use, collaborative and cloud based environment for data scientists where they can use tools like Scala, R, Jupyter Notebookc etc.
-
-Log into [https://dataplatform.cloud.ibm.com/](https://dataplatform.cloud.ibm.com/?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg) and choose to create a `New Project`, the `Complete` option will work for this tutorial.
-
-![](images/new_project.png)
-
-At the new project wizard, enter a `Name` and `Description`, You will also be required to create a new `Object Storage` service or choose an existing service during project creation. Once created, you'll be able to see a project overview, for example:
-
-![](images/dashboard.png)
-
-Once created, we can add an asset, by clicking `Add to project` and in this case, we'll click `Model`, to add a new model.
-
-![](images/add_model.png)
-
-### Step 4: Create a new model
-
-Give your model a `Name` and `Description`. We will also set the `Model type` option to `Model builder` and choose the `Manual` for this exercise.
-
-Before proceeding we need to associate two services. An `Apache Spark` service, and a `Machine Learning` service. You can use the UI to create a new one or select an existing one. For an example of how to do that with `Apache Spark`, refer to this [IBM Code Tutorial](https://developer.ibm.com/tutorials/create-a-spark-service-for-ibm-watson-studio/). To do that with `Machine Learning` is the same exercise.
-
-![](images/create_model.png)
-
-### Step 5: Add data to the model
-
-We're now going to add the CSV file to the model. Click `Add Data Assets`, browse to either the generated CSV file or the saved sample CSV file. The data should appear in the dashboard, for example:
-
-![](images/add_tweets.png)
-
-Click on the `Next` button to continue. Loading the data may take a few minutes.
-
-### Step 6: Select a training technique
-
-For this example we're trying to predict the best time to send a tweet, so let's set the `Column value to predict` to be `hour`. Leave the `Feature columns` unchanged and set to `All`. The important choice here is the **technique** used, we'll be using the `Regression` technique. We'll also be leving the `Validation Split` unchanged.
-
-*It should be noted that because the classifier is set to `hour`, which has around 20 values, Watson Studio will suggested `Multiclass classification`. But in this case the best technique according to our data is `Regression`.*
-
-![](images/technique.png)
-
-We also need to add estimators. To do that, click on `Add Estimators` and select all avilable choices, then click `Add`.
-
-![](images/estimators.png)
-
-Once we have our technique and estimators selected we can click `Next`. This will start training and testing data. This step will take a few minutes to fully complete.
-
-### Step 7: Wrapping up
-
-The results show just how accurate each estimator is, with the most optimal estimator at the top. Here it is `Isotonic Regression`, click on the first one and select the `Save` option, for example:
-
-![](images/evaluation.png)
-
-Once saved, you will be redirected to an overview of the model, for example:
-
-![](images/summary.png)
-
-From here, we can create a web deployment so our model is accessible over a REST call.
-
-![](images/deploy.png)
-
-Congratulations! Your model is saved, deployed, and you can start testing it out with the generated `cURL`, `Java`, `JavaScript` and `Python` snippets.
 
 ## Summary
 
