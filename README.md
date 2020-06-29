@@ -46,7 +46,7 @@ Go to your [Twitter Developer account](https://developer.twitter.com/), hover ov
 <br>Once your app is created select the Keys and Tokens tab. You will see your Consumer API key and Consumer API secret key which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)<br><br>
 
 
-<img width="800" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
+<img width="1440" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
 
 ### Step 2: Creating a Cloud Object Storage (COS) service in IBM Cloud
 
@@ -58,7 +58,7 @@ Log into your ibm cloud account at https://cloud.ibm.com/login, click on Create 
 
 <br>Choose the lite plan which is free, change the name if you want to and click on Create.<br>
 
-<img width="800" alt="cos2" src="https://user-images.githubusercontent.com/15332386/85959763-5f72dd00-b9af-11ea-801f-c7334573053b.png">
+<img width="1440" alt="cos2" src="https://user-images.githubusercontent.com/15332386/85959763-5f72dd00-b9af-11ea-801f-c7334573053b.png">
 
 You can now find your object storage instance created in ressources under Storage. Once you open your instance click on Buckets from the left side panel and create a bucket (You can choose any type of bucket). Make sure to note down the name of your bucket once you create it.
 
@@ -206,7 +206,7 @@ IMAGE <br>
 
  ### Step 4: Create a Watson Studio Service
  
-Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for Watson Studio select the lite plan to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on **Get Started**. This will launch the Watson Studio platform. <br>
+Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for Watson Studio select the lite plan to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on **Get Started**. This will launch the Watson Studio platform.
  
 <img width="1440" alt="WS1" src="https://user-images.githubusercontent.com/15332386/86030143-25ecb100-ba45-11ea-8424-fa34cf01dec8.png">
  
@@ -216,22 +216,23 @@ Click on Create Project and then Create Empty Project.
 
 Give a name your project and give it a description. Make sure to choose the COS that you created before<br>
 
-<img width="1440" alt="WS3" src="https://user-images.githubusercontent.com/15332386/85960270-6865ad80-b9b3-11ea-986d-5baadabfec4d.png">
+<img width="1440" alt="WS3" src="https://user-images.githubusercontent.com/15332386/86039582-add9b780-ba53-11ea-920b-6c813218916a.png">
 
 
 ### Step 5: Create a connection to the COS
  
-Click on Add to projects. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, it means we have access to the data inside it which we need to build our machine learning model with AutoAI. <br>
-<img width="1440" alt="WS4" src="https://user-images.githubusercontent.com/15332386/85960272-68fe4400-b9b3-11ea-80b5-53cfe5ea88e8.png">
+Click on Add to projects. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, it means we have access to the data inside it which we need to build our machine learning model with AutoAI.
 
-Click on **connection** so we can start creating our connection to our COS <br>
+<img width="1440" alt="WS4" src="https://user-images.githubusercontent.com/15332386/86039587-b0d4a800-ba53-11ea-9ef2-2868794d1a23.png">
+
+Click on **connection** so we can start creating our connection to our COS 
 
 <img width="961" alt="WS5" src="https://user-images.githubusercontent.com/15332386/85960273-6996da80-b9b3-11ea-9777-433d8189d512.png">
 
 Click on Cloud Object Storage.
 <img width="1440" alt="WS6" src="https://user-images.githubusercontent.com/15332386/85960274-6996da80-b9b3-11ea-82d7-abe832f6118b.png">
 
-Add a name to your connection, and fill the information with the credentials that we got from our first step. <br>
+Add a name to your connection, and fill the information with the credentials that we got from our first step.
 <img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/85960276-6a2f7100-b9b3-11ea-9dc4-c07822487f14.png">
 
 Click again on Add to projects and this time click on connected data. Select your source which is the connection created in the previous step, select your bucket and then **tweets.csv** file. Give a name to your asset and click on create. <br>
