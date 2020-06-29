@@ -15,7 +15,7 @@ After completing this how-to, the reader will be able to:
 
 ## Prerequisites
 
-* IBM Cloud account - [sign up](https://cloud.ibm.com/registration?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg/) if you don't have an account yet.
+* IBM Cloud account - [Sign up](https://cloud.ibm.com/registration?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg/) if you don't have an account yet.
 * A [Twitter account](https://twitter.com/)
 * A [Twitter Developer account](https://developer.twitter.com/)
 
