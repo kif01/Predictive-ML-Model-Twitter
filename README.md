@@ -45,7 +45,7 @@ Once your app is created select the `Keys and Tokens` tab. You will see your `Co
 
 <img width="1440" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
 
-### Step 2: Creating a Cloud Object Storage (COS) service in IBM Cloud
+### Step 2: Creating a Cloud Object Storage (COS) service
 
 Log into your ibm cloud account at https://cloud.ibm.com/login, click on `Create Resource` and search for **Object Storage**.
 
@@ -234,7 +234,7 @@ Just like we created the COS at the beginning, we will repeat the same process b
  
 Click on `Create Project` and then `Create Empty Project`.
 
-<img width="1440" alt="WS2" src="https://user-images.githubusercontent.com/15332386/85960269-64399000-b9b3-11ea-8d77-7277185a12ac.png">
+<img width="1440" alt="WS2" src="https://user-images.githubusercontent.com/15332386/86057477-4aaa4e00-ba70-11ea-81d2-bd84db17be2e.png">
 
 Give a name your project and give it a description. Make sure to choose the COS that you created before<br>
 
@@ -286,7 +286,7 @@ Click again on `Add to projects` and and this time choose `AutoAI experiment`.
 
 Give a name to your project and choose a machine learning instance. This is needed so we can deploy our model at the end. If you don't have one, Watson Studio will ask you to directly create it and you will be bale to proceed normally.
 
-<img width="1440" alt="AI2" src="https://user-images.githubusercontent.com/15332386/86002824-f8424080-ba21-11ea-82b0-766288acce00.png">
+<img width="1440" alt="AI2" src="https://user-images.githubusercontent.com/15332386/86057404-2f3f4300-ba70-11ea-8b36-cb80088810c9.png">
 
 Now you need to add your file, select the `Tweets_shaped.csv` file that was generated from the Data Refinery.
 
