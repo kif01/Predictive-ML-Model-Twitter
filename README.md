@@ -171,9 +171,9 @@ def createFile(tweets):
     else:
         print('File Uploaded') 
 ```    
-<br> From the `twitterApp` directory, create a .zip archive of the `virtualenv` folder and your `main.py` file. These files must be in the top level of your .zip file.
+<br>From the `twitterApp` directory, create a .zip archive of the `virtualenv` folder and your `main.py` file. These files must be in the top level of your .zip file.
 ```dos
-$ zip -r jokes.zip virtualenv main.py
+$ zip -r twitterApp.zip virtualenv main.py
 ```
 <br> Now it's time to push this function to IBM Cloud Log in to your IBM Cloud account and make sure to target your organization and space. You can check more about this here https://cloud.ibm.com/docs/cli?topic=cli-ibmcloud_cli#ibmcloud_target .
 ```doc
