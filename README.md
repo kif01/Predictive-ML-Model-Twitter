@@ -208,7 +208,7 @@ IMAGE <br>
  
 Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for Watson Studio select the lite plan to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on **Get Started**. This will launch the Watson Studio platform. <br>
  
-<img width="1440" alt="WS1" src="https://user-images.githubusercontent.com/15332386/85960261-571ca100-b9b3-11ea-94da-306eef86e266.png">
+<img width="1440" alt="WS1" src="https://user-images.githubusercontent.com/15332386/86030143-25ecb100-ba45-11ea-8424-fa34cf01dec8.png">
  
 Click on Create Project and then Create Empty Project.
 
