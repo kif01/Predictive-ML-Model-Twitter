@@ -27,7 +27,7 @@ To complete this tutorial it should take around 1 hour.
 
 ### Use sample data or get your own?
 
-The first thing we'll need to do is get a bunch of tweets to analyze. In this step we'll go through how to get a bunch of tweets, but if you're not interested in doing that, we provide a sample data set (If you choose to use the sample data set, then you will be skipping the Cloud Function section of this tutorial):
+The first thing we'll need to do is get a bunch of tweets to analyze. In this step we'll go through how to get a bunch of tweets, but if you're not interested in doing that, we provide a sample data set (If you choose to use the sample data set, then you will be skipping the **Twitter API access** and **Cloud Function** sections of this tutorial):
 
 * **[ufone_tweets.csv](static/ufone_tweets.csv)**: Tweets from a Ufone, a phone operator, cleaned up and ready to use.
 
@@ -67,14 +67,14 @@ Go to `Service Crendentials` from the panel, select the service credential that 
 Go to `Endpoint` from the panel. Choose your `Resilency` and `Region`, and note down the `Private url` since it will be needed later in our cloud function.<br/>
 
 <img width="1440" alt="cos5" src="https://user-images.githubusercontent.com/15332386/85959766-613ca080-b9af-11ea-990f-d2aef0d6c83c.png">
-<br/>
+
 Our bucket is now ready, make sure to have your:
  * Bucket name
  * Api Key
  * Service ID
  * Endpoint Url
  
- *Again, if you're using the sample data, then you can directly upload the file in your bucket, and skip step 3 (Jump to step 4).*
+*Again, if you're using the sample data, then you can directly upload the file in your bucket, and skip step 3 (Jump to step 4).*
  
  
  ### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
