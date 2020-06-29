@@ -107,7 +107,7 @@ $ source virtualenv/bin/activate
   ```dos
 (virtualenv) $ deactivate
  ```
- <br> Copy the following code and save it into a file called `main__.py` in the `twitterApp` directory, and add the corresponding credentials that we got from step 1 (**Customer keys**) and step 2 (**COS credentials**). In addition, you can change the twitter handle that you want to analyze (In this example we are analyzing **Charlize Theron** profile). This code gets the data from twitter and then creates a CSV file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a CSV file containig tweets info will be uploaded in COS.
+Copy the following code and save it into a file called `main.py` in the `twitterApp` directory, and add the corresponding credentials that we got from step 1 (**Customer keys**) and step 2 (**COS credentials**). In addition, you can change the twitter handle that you want to analyze (In this example we are analyzing **Charlize Theron** profile). This code gets the data from twitter and then creates a CSV file that contains this data and upload it into the object storage service that we created at the beginning. Once we run this function, a CSV file containig tweets info will be uploaded in COS.
  ```python
 import tweepy
 import sys, json
