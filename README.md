@@ -81,7 +81,7 @@ Our bucket is now ready, make sure to have your:
 ### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
 Cloud Function is IBM's Function-as-a-Service (Faas) programming platform where you write simple, single-purpose functions known as **Actions** that can be attached to **Triggers** which trigger the function when a specific defined event occurs.
 
-#### Creating an Action
+#### Create an Action
 
 Usually we create the **Actions** directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our Python code and package it with a virual local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
 
@@ -184,7 +184,6 @@ Now it's time to push this function to IBM Cloud Log in to your IBM Cloud accoun
 ```doc
 $ ibmcloud login
 ```
-
 Create an action called `twitterAction` using the zip folder that was just created (right click on the file and check get info for Mac or Properties for Windows to get the path), by specifying the entry point which is our`main` function in the code, and the `--kind` flag for runtime.
 ```dos
 $ ibmcloud fn action create twitterAction </path/to/file/>twitterApp.zip --kind python:3.7 --main main
@@ -203,7 +202,7 @@ $ ibmcloud fn action invoke twitterAction --result
 ```
 If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file `tweets.csv` that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function.
 
-#### Creating a Trigger
+#### Create a Trigger
 
 Let's create a **Trigger** that invokes our action. Choose `Triggers` from the left panel and click on `Trigger`
 
@@ -225,7 +224,6 @@ Choose the `Select Existing` tab, select your action and click `Add`. Now your a
 
 <img width="1440" alt="Trigger5" src="https://user-images.githubusercontent.com/15332386/86051314-437e4280-ba66-11ea-9940-ba7c10f849d4.png">
 
-
 ### Step 4: Create a Watson Studio Service
  
 Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for **Watson Studio** select the `Lite plan` to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on `Get Started`. This will launch the Watson Studio platform.
@@ -239,7 +237,6 @@ Click on `Create Project` and then `Create Empty Project`.
 Give a name your project and give it a description. Make sure to choose the COS that you created before<br>
 
 <img width="1440" alt="WS3" src="https://user-images.githubusercontent.com/15332386/86039582-add9b780-ba53-11ea-920b-6c813218916a.png">
-
 
 ### Step 5: Create a connection to the COS
  
