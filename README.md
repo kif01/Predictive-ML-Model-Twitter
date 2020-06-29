@@ -78,10 +78,11 @@ Our bucket is now ready, make sure to have your:
  
  
 ### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
+Cloud Function is IBM's Function-as-a-Service (Faas) programming platform where you write simple, single-purpose functions known as **Actions** that can be attached to **Triggers** which trigger the function when a specific defined event occurs.
 
 #### Creating an Action
 
-Usually we create Cloud Functions directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our Python code and package it with a virual local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
+Usually we create the **Actions** directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our Python code and package it with a virual local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
 
 If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/). Once installed make sure to install `virtualenv`. 
 ```dos
@@ -203,6 +204,25 @@ If you go to your bucket in the object storage service that you created at the b
 
 #### Creating a Trigger
 
+Let's create a **Trigger** that invokes our action. Choose `Triggers` from the left panel and click on `Trigger`
+
+<img width="1440" alt="Trigger1" src="https://user-images.githubusercontent.com/15332386/86051297-3e20f800-ba66-11ea-9ab9-154caae76c50.png">
+
+Choose `Periodic` for the trigger type. This means that our event here is time, the function will be invoked on a specified time.
+
+<img width="1439" alt="Trigger2" src="https://user-images.githubusercontent.com/15332386/86051309-41b47f00-ba66-11ea-955b-2edbf6d9f394.png">
+
+Give a name to your trigger and define set the timer and click `Create`. In this example, the timer is set on Sundays. Every Sunday the trigger will fire at 4:00 am GMT+4 and invokes our action to fetch twitter data and create a new csv file with new tweets.
+
+<img width="1440" alt="Trigger3" src="https://user-images.githubusercontent.com/15332386/86051310-42e5ac00-ba66-11ea-8fea-1ec6c6f884f8.png">
+
+Click `Add` so we can connect this trigger to our action.
+
+<img width="1440" alt="Trigger4" src="https://user-images.githubusercontent.com/15332386/86051312-437e4280-ba66-11ea-8ff3-064eae2de16b.png">
+
+Choose the `Select Existing` tab, select your action and click `Add`. Now your action is connected to this trigger and get fired based on the time that you specified before.
+
+<img width="1440" alt="Trigger5" src="https://user-images.githubusercontent.com/15332386/86051314-437e4280-ba66-11ea-9940-ba7c10f849d4.png">
 
 
 ### Step 4: Create a Watson Studio Service
