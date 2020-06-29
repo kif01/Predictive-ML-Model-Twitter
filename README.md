@@ -77,8 +77,10 @@ Our bucket is now ready, make sure to have your:
 *Again, if you're using the sample data, then you can directly upload the file in your bucket, and skip step 3 (Jump to step 4).*
  
  
- ### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
- 
+### Step 3: Create a Cloud Function ( This step is only valid if you started with step 1 )
+
+#### Creating an Action
+
 Usually we create Cloud Functions directly from IBM cloud, but in our case, we want to use [tweepy](https://github.com/tweepy/tweepy) which is an external Python library for accessing Twitter API. External libraries are not supported in the Cloud Function runtime environment. We will have to write our Python code and package it with a virual local environemnt in a .zip file, and then push it to IBM Cloud.<br><br>
 
 If you don't have Python, then [download and install the latest version](https://www.python.org/downloads/). Once installed make sure to install `virtualenv`. 
@@ -187,20 +189,23 @@ $ ibmcloud fn action create twitterAction </path/to/file/>twitterApp.zip --kind 
 ```
 Go back to IBM Cloud, and click on Cloud Functions on the left side of the window. 
 
-IMAGE <br>
+<img width="1438" alt="CF1" src="https://user-images.githubusercontent.com/15332386/86049106-a077f980-ba62-11ea-8fc5-1cf4057dc6dc.png">
 
 Click on `Action`, make sure the right namespace is selected, you will see the action that was created. Click on it and then click `Invoke` to run it.
 
-IMAGE <br>
+<img width="1432" alt="CF2" src="https://user-images.githubusercontent.com/15332386/86049113-a4a41700-ba62-11ea-8f9f-9a3cd4e9bc92.png">
+
 You can run it as well directly from the terminal using this command:
 ```dos
 $ ibmcloud fn action invoke twitterAction --result
 ```
-If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function. 
+If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function.
 
-IMAGE <br>
+#### Creating a Trigger
 
- ### Step 4: Create a Watson Studio Service
+
+
+### Step 4: Create a Watson Studio Service
  
 Just like we created the COS at the beginning, we will repeat the same process but this time we will create a Watson Studio service. Search for **Watson Studio** select the `Lite plan` to create it. You can find it instantiated under services in resource summary (Main dashboard of your ibm cloud account). Click on it and the click on `Get Started`. This will launch the Watson Studio platform.
  
