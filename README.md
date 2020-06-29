@@ -59,7 +59,7 @@ You can now find your object storage instance created in resources under `Storag
 
 <img width="1440" alt="cos3" src="https://user-images.githubusercontent.com/15332386/85959764-600b7380-b9af-11ea-8b51-40e762b398bb.png">
 
-Go to `Service Crendentials` from the panel, select the service credential that has just been created. If nothing is there then click on `New credential` to generate one. Click on the arrow to expand the credentials. Note down the `api_key` and the `iam_serviceid_crn`.
+Go to `Service Crendentials` from the panel, select the service credential that has just been created. If nothing is there then click on `New credential` to generate one. Click on the arrow to expand the credentials. Note down the `api_key`, `iam_serviceid_crn` and `resource_instance_id` .
 
 <img width="1440" alt="cos4" src="https://user-images.githubusercontent.com/15332386/85959765-60a40a00-b9af-11ea-824d-c44c07d62e7c.png">
 
@@ -72,6 +72,7 @@ Our bucket is now ready, make sure to have your:
  * Bucket name
  * Api Key
  * Service ID
+ * Resource Instance ID
  * Endpoint Url
  
 *Again, if you're using the sample data, then you can directly upload the file in your bucket, and skip step 3 (Jump to step 4).*
@@ -157,7 +158,7 @@ def createFile(tweets):
     ibm_service_instance_id= <"COS_SERVICE_ID">,
   
     config=Config(signature_version='oauth'),
-    endpoint_url=<"COS_ENDPOINT_URL">)
+    endpoint_url= "https://" + <"COS_ENDPOINT_URL">)
     
     body = client.get_object(Bucket=<'BUCKET_NAME'>,Key='tweets.csv')['Body']
     if not hasattr(body, "__iter__"): body.__iter__ = types.MethodType( __iter__, body )
