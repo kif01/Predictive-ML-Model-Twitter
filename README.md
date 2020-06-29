@@ -41,7 +41,7 @@ Go to your [Twitter Developer account](https://developer.twitter.com/), hover ov
 
 <img width="1438" alt="twitter1" src="https://user-images.githubusercontent.com/15332386/86057165-b3dd9180-ba6f-11ea-9f91-3f2f6e4178bc.png">
 
-Once your app is created select the `Keys and Tokens` tab. You will see your `Consumer API key` and `Consumer API secret key` which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret. (Here we won't be using the api tokens so you can ignore them)
+Once your app is created select the `Keys and Tokens` tab. You will see your `Consumer API key` and `Consumer API secret key` which we will be using later in the tutorial. These can be revoked and regenerated, but as with any other key, you should keep these secret (Here we won't be using the api tokens so you can ignore them).
 
 <img width="1440" alt="twitter2" src="https://user-images.githubusercontent.com/15332386/85959799-921cd580-b9af-11ea-9ff3-8b16fa530ff9.png">
 
@@ -249,7 +249,8 @@ Click on `connection` so we can start creating our connection to our COS.
 Click on `Cloud Object Storage`.
 <img width="1440" alt="WS6" src="https://user-images.githubusercontent.com/15332386/86056964-5c3f2600-ba6f-11ea-906c-e75063c2df3f.png">
 
-Add a name to your connection, and fill the information with the credentials that we got from **step 2** (COS credentials).
+Add a name to your connection, and fill the information with the credentials that we got from **step 2** (COS credentials). Just add the `API_KEY`, `Resource Instance ID`, and `Login URL` which is the endpoint. You can leave the other fields empty.
+
 <img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/86056974-619c7080-ba6f-11ea-881b-8eed376b33bf.png">
 
 Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose `tweets.csv` file. Give a name to your asset and click on `Create`.
