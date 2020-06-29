@@ -201,7 +201,7 @@ You can run it as well directly from the terminal using this command:
 ```dos
 $ ibmcloud fn action invoke twitterAction --result
 ```
-If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file **tweets.csv** that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function.
+If you go to your bucket in the object storage service that you created at the beginning of the tutorial, you will see a file `tweets.csv` that has just been uploaded. This is the file that has all the extracted tweets from the Cloud Function.
 
 #### Creating a Trigger
 
@@ -209,7 +209,7 @@ Let's create a **Trigger** that invokes our action. Choose `Triggers` from the l
 
 <img width="1440" alt="Trigger1" src="https://user-images.githubusercontent.com/15332386/86051297-3e20f800-ba66-11ea-9ab9-154caae76c50.png">
 
-Choose `Periodic` for the trigger type. This means that our event here is time, the function will be invoked on a specified time.
+Choose `Periodic` for the trigger type. This means that our event here is time, the function will get invoked on a specific time.
 
 <img width="1439" alt="Trigger2" src="https://user-images.githubusercontent.com/15332386/86051309-41b47f00-ba66-11ea-955b-2edbf6d9f394.png">
 
@@ -243,7 +243,7 @@ Give a name your project and give it a description. Make sure to choose the COS 
 
 ### Step 5: Create a connection to the COS
  
-Click on `Add to projects`. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the **tweets.csv** file. Once we can reach this file, we can then have access to the data inside it that we need to build our machine learning model with AutoAI.
+Click on `Add to projects`. Here you will see all kind of assets that we can use in Watson Studio. We want to create a connection to our COS so we can access the `tweets.csv` file. Once we can reach this file, we can then have access to the data inside it that we need to build our machine learning model with AutoAI.
 
 <img width="1440" alt="WS4" src="https://user-images.githubusercontent.com/15332386/86039587-b0d4a800-ba53-11ea-9ef2-2868794d1a23.png">
 
@@ -257,7 +257,7 @@ Click on `Cloud Object Storage`.
 Add a name to your connection, and fill the information with the credentials that we got from **step 2** (COS credentials).
 <img width="1440" alt="WS7" src="https://user-images.githubusercontent.com/15332386/85960276-6a2f7100-b9b3-11ea-9dc4-c07822487f14.png">
 
-Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose **tweets.csv** file. Give a name to your asset and click on `Create`. <br>
+Click again on `Add to projects` and this time click on `connected data`. Select your source which is the connection created in the previous step, select your bucket and then choose `tweets.csv` file. Give a name to your asset and click on `Create`. <br>
 <img width="1440" alt="WS8" src="https://user-images.githubusercontent.com/15332386/85960277-6ac80780-b9b3-11ea-9e06-2f787714f522.png">
 
 ### Step 6: Refine the Data
@@ -272,10 +272,10 @@ Once you're done, click on `save and create job` <br>
 Give the job a name, and click on `Create and Run`<br>
 <img width="1438" alt="WS12" src="https://user-images.githubusercontent.com/15332386/85960281-6bf93480-b9b3-11ea-9906-356b13ff72c7.png">
 
-This job will create a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see, the output of this job is a file is named **Tweets_shaped.csv**. Wait unitl the status of the job shows **Completed**. <br>
+This job will create a new data set based on the one that we already have but with our refinements that were responsible to convert 3 rows to integer. As we can see, the output of this job is a file is named `Tweets_shaped.csv`. Wait unitl the status of the job shows **Completed**. <br>
 <img width="1440" alt="WS13" src="https://user-images.githubusercontent.com/15332386/85960282-6c91cb00-b9b3-11ea-9f93-d7fce0df6b93.png">
 
-Now you should see 3 assets just like the image below. The **Tweets_shaped.csv** is now our main file that we will be using in AutoAI to create our predictive model. <br>
+Now you should see 3 assets just like the image below. The `Tweets_shaped.csv` is now our main file that we will be using in AutoAI to create our predictive model. <br>
 <img width="1440" alt="WS14" src="https://user-images.githubusercontent.com/15332386/85960283-6c91cb00-b9b3-11ea-8f31-2cfef8871480.png">
 
 ### Step 7: Create an AutoAI experiment
@@ -288,7 +288,7 @@ Give a name to your project and choose a machine learning instance. This is need
 
 <img width="1440" alt="AI2" src="https://user-images.githubusercontent.com/15332386/86002824-f8424080-ba21-11ea-82b0-766288acce00.png">
 
-Now you need to add your file, select the **Tweets_shaped.csv** file that was generated from the Data Refinery.
+Now you need to add your file, select the `Tweets_shaped.csv` file that was generated from the Data Refinery.
 
 <img width="788" alt="AI3" src="https://user-images.githubusercontent.com/15332386/86002828-f8dad700-ba21-11ea-9045-538b3d631c1f.png">
 
