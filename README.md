@@ -320,4 +320,4 @@ If you want to inplmenent this model in your application check the `Implmentatio
 
 ## Summary
 
-In this tutorial we learned to extract user data from twitter and then perform data science predictive model on it to optimize future tweeting and increasing the users audience. This tutorial of building a model on Watson Studio can be applied on any other CSV file as well and can be further deployed on a web application. We also learned how to deploy the model as a web application to allow REST calls.
+In this tutorial we learned to extract user data from twitter, create a CSV file that contains this data and upload it to COS using Cloud Functions. Then we learned how  perform data science predictive model on this data to optimize future tweeting and increasing the users audience using Watson Studio and AutoAI. This tutorial can be applied on any other CSV file as well and can be further implemented on a web application.
